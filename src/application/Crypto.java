@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frame;
+package application;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.Key;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,25 +65,7 @@ public class Crypto {
              Logger.getLogger(Crypto.class.getName()).log(Level.SEVERE, null, ex);
          }
      }
-     
-     
-     static void fileProcessorRSA(int cipherMode, Key key, File inputFile,File outputFile){
-	 try {
-                Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-                cipher.init(cipherMode, key);
-             
-                byte[] inputBytes = FileUtils.readFileToByteArray(inputFile);
-                byte[] outputBytes = cipher.doFinal(inputBytes);
-                FileUtils.writeByteArrayToFile(outputFile, outputBytes);
-
-	    } catch (NoSuchPaddingException | NoSuchAlgorithmException 
-                     | InvalidKeyException | BadPaddingException
-	             | IllegalBlockSizeException | IOException e) {
-            } catch (java.security.InvalidKeyException ex) {
-             Logger.getLogger(Crypto.class.getName()).log(Level.SEVERE, null, ex);
-         }
-     }
-     
+         
      
      
       static void fileProcessorBlowFish(int cipherMode, String key, File inputFile,File outputFile){
@@ -101,5 +84,40 @@ public class Crypto {
             } catch (java.security.InvalidKeyException ex) {
              Logger.getLogger(Crypto.class.getName()).log(Level.SEVERE, null, ex);
          }
+     }
+      
+      
+      static void fileProcessorSHA(File inputFile,File outputFile){
+	 try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                byte[] inputBytes = FileUtils.readFileToByteArray(inputFile);
+                byte[] outputBytes = md.digest(inputBytes);
+                StringBuffer stringBuffer = new StringBuffer();
+                for (int i = 0; i < outputBytes.length; i++) {
+                stringBuffer.append(Integer.toString((outputBytes[i] & 0xff) + 0x100, 16)
+                .substring(1));
+                }
+                FileUtils.writeByteArrayToFile(outputFile, stringBuffer.toString().getBytes());
+
+
+	    } catch (NoSuchAlgorithmException 
+                     | InvalidKeyException | IOException e) {
+            }
+     }
+      static void fileProcessorMD5(File inputFile,File outputFile){
+	 try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                byte[] inputBytes = FileUtils.readFileToByteArray(inputFile);
+                byte[] outputBytes = md.digest(inputBytes);
+                StringBuffer stringBuffer = new StringBuffer();
+                for (int i = 0; i < outputBytes.length; i++) {
+                stringBuffer.append(Integer.toString((outputBytes[i] & 0xff) + 0x100, 16)
+                .substring(1));
+                }
+                FileUtils.writeByteArrayToFile(outputFile, stringBuffer.toString().getBytes());
+
+	    } catch (NoSuchAlgorithmException 
+                     | InvalidKeyException | IOException e) {
+            }
      }
 }
