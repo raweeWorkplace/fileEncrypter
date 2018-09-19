@@ -19,6 +19,7 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
@@ -297,7 +298,7 @@ public class mainApplicaton extends javax.swing.JFrame {
        plainFile = null;
        plainFilePath = null;
        lblFileName.setText("");
-       lblTimeTaken.setText("");
+       //lblTimeTaken.setText("");
        publicKeyRSA = null;
        privateKeyRSA = null;
        EncryptionRadio.setSelected(true);
@@ -392,25 +393,33 @@ public class mainApplicaton extends javax.swing.JFrame {
     }//GEN-LAST:event_EncryptionTypeComboActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if(EncryptionRadio.isSelected()){
-            if(EncryptionMethodCombo.getSelectedItem().toString().equalsIgnoreCase("DES")){
-                encType(Cipher.ENCRYPT_MODE,null,publicKeyDES);
-                String key64 = Base64.getEncoder().encodeToString(publicKeyDES.getEncoded());
-                JOptionPane.showMessageDialog(null, new JTextArea(key64), "Private Key", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            encType(Cipher.ENCRYPT_MODE, null, null);
+        try {
+            Key k = KeyGenerator.getInstance("DES").generateKey();
+            byte [] raw = k.getEncoded();
+            publicKeyDES = new SecretKeySpec(raw, "DES");
+            
+            if(EncryptionRadio.isSelected()){
+                if(EncryptionMethodCombo.getSelectedItem().toString().equalsIgnoreCase("DES")){
+                    encType(Cipher.ENCRYPT_MODE,null,publicKeyDES);
+                    String key64 = Base64.getEncoder().encodeToString(publicKeyDES.getEncoded());
+                    JOptionPane.showMessageDialog(null, new JTextArea(key64), "Private Key", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    encType(Cipher.ENCRYPT_MODE, null, null);
+                }
+            }else{
+                if(EncryptionMethodCombo.getSelectedItem().toString().equalsIgnoreCase("DES")){
+                    String keyString = JOptionPane.showInputDialog("Enter Private Key");
+                    byte[] decodedKey = Base64.getDecoder().decode(keyString);
+                    SecretKeySpec key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "DES");
+                    encType(Cipher.DECRYPT_MODE,null,key);
+                }else{
+                    encType(Cipher.DECRYPT_MODE, null, null);
+                }
+            }
+            reset();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(mainApplicaton.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }else{
-            if(EncryptionMethodCombo.getSelectedItem().toString().equalsIgnoreCase("DES")){
-                String keyString = JOptionPane.showInputDialog("Enter Private Key");
-                byte[] decodedKey = Base64.getDecoder().decode(keyString);
-                SecretKeySpec key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "DES");
-                encType(Cipher.DECRYPT_MODE,null,key);
-        }else{
-            encType(Cipher.DECRYPT_MODE, null, null);
-        }
-        }
-        reset();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
