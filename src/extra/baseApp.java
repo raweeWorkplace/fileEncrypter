@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frame;
+package extra;
 
 
 
+import application.Crypto;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -83,6 +84,11 @@ public class baseApp extends javax.swing.JFrame {
         radioRSA = new javax.swing.JRadioButton();
         btnClear = new javax.swing.JButton();
         radioBlowFish = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(java.awt.Color.gray);
@@ -105,10 +111,12 @@ public class baseApp extends javax.swing.JFrame {
         jLabel3.setForeground(java.awt.Color.white);
         jLabel3.setText("Encryption Type :");
 
+        radioAES.setBackground(java.awt.Color.lightGray);
         radioAES.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
         radioAES.setForeground(java.awt.Color.white);
         radioAES.setText("AES");
 
+        radioDES.setBackground(java.awt.Color.lightGray);
         radioDES.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
         radioDES.setForeground(java.awt.Color.white);
         radioDES.setText("DES");
@@ -136,7 +144,7 @@ public class baseApp extends javax.swing.JFrame {
             }
         });
 
-        lblClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/frame/delete-filled.png"))); // NOI18N
+        lblClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/application/delete-filled.png"))); // NOI18N
         lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCloseMouseClicked(evt);
@@ -155,49 +163,88 @@ public class baseApp extends javax.swing.JFrame {
             }
         });
 
+        radioBlowFish.setBackground(java.awt.Color.lightGray);
         radioBlowFish.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
         radioBlowFish.setForeground(java.awt.Color.white);
         radioBlowFish.setText("Blow Fish");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<--Select Operation-->", "Encrypt", "Decrypt" }));
+
+        jRadioButton1.setBackground(java.awt.Color.lightGray);
+        jRadioButton1.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
+        jRadioButton1.setForeground(java.awt.Color.white);
+        jRadioButton1.setText("Normal");
+
+        jRadioButton2.setBackground(java.awt.Color.lightGray);
+        jRadioButton2.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
+        jRadioButton2.setForeground(java.awt.Color.white);
+        jRadioButton2.setText("Sensitive");
+
+        jRadioButton3.setBackground(java.awt.Color.lightGray);
+        jRadioButton3.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
+        jRadioButton3.setForeground(java.awt.Color.white);
+        jRadioButton3.setText("MD5");
+
+        jRadioButton4.setBackground(java.awt.Color.lightGray);
+        jRadioButton4.setFont(new java.awt.Font("Century Schoolbook L", 1, 18)); // NOI18N
+        jRadioButton4.setForeground(java.awt.Color.white);
+        jRadioButton4.setText("SHA1");
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
         basePanel.setLayout(basePanelLayout);
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
+                        .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(basePanelLayout.createSequentialGroup()
+                                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButton1)
+                                    .addComponent(jRadioButton3)
+                                    .addComponent(jRadioButton4))
+                                .addGap(67, 67, 67)
+                                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radioAES)
+                                    .addComponent(jRadioButton2)
+                                    .addComponent(radioDES)
+                                    .addComponent(radioBlowFish))))
+                        .addGap(32, 32, 32))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(131, 131, 131))))
             .addGroup(basePanelLayout.createSequentialGroup()
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblClose))
                     .addGroup(basePanelLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel2))
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(basePanelLayout.createSequentialGroup()
-                                .addComponent(btnEncrypt)
+                                .addGap(194, 194, 194)
+                                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(basePanelLayout.createSequentialGroup()
+                                        .addComponent(btnEncrypt)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnDecrypt))
+                                    .addGroup(basePanelLayout.createSequentialGroup()
+                                        .addGap(157, 157, 157)
+                                        .addComponent(radioRSA))
+                                    .addComponent(lblTimeTaken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDecrypt))
+                                .addComponent(btnClear))
                             .addGroup(basePanelLayout.createSequentialGroup()
-                                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblFileName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnBrowse, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, basePanelLayout.createSequentialGroup()
-                                        .addComponent(radioAES)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(radioDES)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(radioRSA))
-                            .addComponent(lblTimeTaken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnClear)
-                            .addComponent(radioBlowFish))))
+                                .addGap(24, 24, 24)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 43, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -212,30 +259,41 @@ public class baseApp extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btnBrowse))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2))
+                .addGap(18, 18, 18)
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioAES)
+                    .addComponent(jRadioButton3))
+                .addGap(18, 18, 18)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioDES)
-                    .addComponent(radioAES)
-                    .addComponent(jLabel3)
-                    .addComponent(radioRSA)
-                    .addComponent(radioBlowFish))
+                    .addComponent(jRadioButton4))
+                .addGap(18, 18, 18)
+                .addComponent(radioBlowFish)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(radioRSA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEncrypt)
                     .addComponent(btnDecrypt)
                     .addComponent(btnClear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblTimeTaken, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(lblTimeTaken, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        basePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel3, radioAES, radioBlowFish, radioDES, radioRSA});
+        basePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel3, jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4, radioAES, radioBlowFish, radioDES, radioRSA});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,17 +352,17 @@ public class baseApp extends javax.swing.JFrame {
          
         startTime = System.currentTimeMillis();
 	
-                if(radioAES.isSelected()){
-                    String key = "This is a secret";
-                    Crypto.fileProcessorAES(ciphermode, key, plainFile, new File(plainFilePath));
-                }else if(radioDES.isSelected()){
-                    Crypto.fileProcessorDES(ciphermode, secKey, plainFile, new File(plainFilePath));
-                }else if(radioRSA.isSelected()){
-                    Crypto.fileProcessorRSA(ciphermode, accessKey, plainFile, new File(plainFilePath));
-                }else{
-                    String keyString = "DesireSecretKey";
-                    Crypto.fileProcessorBlowFish(ciphermode, keyString, plainFile, new File(plainFilePath));
-                }
+//                if(radioAES.isSelected()){
+//                    String key = "This is a secret";
+//                    Crypto.fileProcessorAES(ciphermode, key, plainFile, new File(plainFilePath));
+//                }else if(radioDES.isSelected()){
+//                    Crypto.fileProcessorDES(ciphermode, secKey, plainFile, new File(plainFilePath));
+//                }else if(radioRSA.isSelected()){
+//                    //Crypto.fileProcessorRSA(ciphermode, accessKey, plainFile, new File(plainFilePath));
+//                }else{
+//                    String keyString = "DesireSecretKey";
+//                    Crypto.fileProcessorBlowFish(ciphermode, keyString, plainFile, new File(plainFilePath));
+//                }
                             
             endTime = System.currentTimeMillis();
             time = (endTime - startTime) / 1000.0;
@@ -447,9 +505,14 @@ public class baseApp extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDecrypt;
     private javax.swing.JButton btnEncrypt;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblFileName;
