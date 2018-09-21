@@ -354,7 +354,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             
             endTime = System.currentTimeMillis();
             time = (endTime - startTime) / 1000.0;
-            lblTimeTaken.setText("Execution Time ; " +Double.toString(time));
+            lblTimeTaken.setText("Execution Time : " +Double.toString(time));
             lblStoredFileLocation.setText(plainFilePath);
         }
       }
