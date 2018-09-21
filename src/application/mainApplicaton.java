@@ -354,7 +354,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             
             endTime = System.currentTimeMillis();
             time = (endTime - startTime) / 1000.0;
-            lblTimeTaken.setText("Encryption Time ; " +Double.toString(time));
+            lblTimeTaken.setText("Execution Time ; " +Double.toString(time));
             lblStoredFileLocation.setText(plainFilePath);
         }
       }
@@ -365,6 +365,9 @@ public class mainApplicaton extends javax.swing.JFrame {
       }
     }
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
+        lblTimeTaken.setText("");
+        lblStoredFileLocation.setText("");
+        
         JFileChooser plainFileChooser = new JFileChooser();
         int rVal = plainFileChooser.showSaveDialog(this);
         if (rVal == JFileChooser.APPROVE_OPTION) {
