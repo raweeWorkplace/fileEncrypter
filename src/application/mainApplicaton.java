@@ -73,11 +73,12 @@ public class mainApplicaton extends javax.swing.JFrame {
         lblFileName = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         EncryptionTypeCombo = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
         EncryptionMethodCombo = new javax.swing.JComboBox<>();
         submitButton = new javax.swing.JButton();
         lblTimeTaken = new javax.swing.JLabel();
         lblStoredFileLocation = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblMethod = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
 
@@ -161,10 +162,6 @@ public class mainApplicaton extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        jLabel6.setForeground(java.awt.Color.darkGray);
-        jLabel6.setText("Encryption Method :");
-
         EncryptionMethodCombo.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
         EncryptionMethodCombo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -184,6 +181,29 @@ public class mainApplicaton extends javax.swing.JFrame {
 
         lblStoredFileLocation.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
 
+        jPanel1.setBackground(new java.awt.Color(254, 195, 136));
+
+        lblMethod.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        lblMethod.setForeground(java.awt.Color.darkGray);
+        lblMethod.setText("Hashing Method :");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblMethod)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblMethod)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout operationPanelLayout = new javax.swing.GroupLayout(operationPanel);
         operationPanel.setLayout(operationPanelLayout);
         operationPanelLayout.setHorizontalGroup(
@@ -199,17 +219,17 @@ public class mainApplicaton extends javax.swing.JFrame {
                     .addGroup(operationPanelLayout.createSequentialGroup()
                         .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(EncryptionMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblTimeTaken, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EncryptionTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblStoredFileLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(139, 139, 139))
+                            .addComponent(lblTimeTaken, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblStoredFileLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(39, 39, 39))
         );
 
         operationPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {EncryptionMethodCombo, EncryptionTypeCombo, btnBrowse});
@@ -228,10 +248,10 @@ public class mainApplicaton extends javax.swing.JFrame {
                     .addComponent(EncryptionTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EncryptionMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EncryptionMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTimeTaken, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,7 +260,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        operationPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {EncryptionMethodCombo, EncryptionTypeCombo, btnBrowse, jLabel4, jLabel5, jLabel6, lblFileName});
+        operationPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {EncryptionMethodCombo, EncryptionTypeCombo, btnBrowse, jLabel4, jLabel5, lblFileName});
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
         basePanel.setLayout(basePanelLayout);
@@ -356,6 +376,7 @@ public class mainApplicaton extends javax.swing.JFrame {
             time = (endTime - startTime) / 1000.0;
             lblTimeTaken.setText("Execution Time : " +Double.toString(time));
             lblStoredFileLocation.setText(plainFilePath);
+            JOptionPane.showMessageDialog(this, "File is stored at :"+ plainFilePath);
         }
       }
       if (rVal == JFileChooser.CANCEL_OPTION) {
@@ -392,7 +413,13 @@ public class mainApplicaton extends javax.swing.JFrame {
     }//GEN-LAST:event_EncryptionMethodComboFocusGained
 
     private void EncryptionTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncryptionTypeComboActionPerformed
+        if(EncryptionTypeCombo.getSelectedItem().toString().equals("Sensitive")){
+            lblMethod.setText("Encryption Method :");
+        }else{
+            lblMethod.setText("Hashing Method :");
+        }
         fillComboMethod();
+        
     }//GEN-LAST:event_EncryptionTypeComboActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
@@ -473,9 +500,10 @@ public class mainApplicaton extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblFileName;
+    private javax.swing.JLabel lblMethod;
     private javax.swing.JLabel lblStoredFileLocation;
     private javax.swing.JLabel lblTimeTaken;
     private javax.swing.JPanel operationPanel;
