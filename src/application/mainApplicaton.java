@@ -391,10 +391,10 @@ public class mainApplicaton extends javax.swing.JFrame {
                     EncryptionMethodCombo.addItem("AES");
                     EncryptionMethodCombo.addItem("DES");
                     break;
-                case 6:
+                case 30:
                     EncryptionMethodCombo.addItem("BlowFish");
                     break;
-                case 7:
+                case 31:
                     EncryptionMethodCombo.addItem("AES");
                     break;
                 default:
@@ -483,12 +483,26 @@ public class mainApplicaton extends javax.swing.JFrame {
                     break;
                 case "png":
                     if(state==1){
-                        fillCombo(10);
+                        fillCombo(11);
                     }else if(state ==2){
                         fillCombo(20);
                     }             
                     break;
                 case "mp4":
+                    if(size<5120){
+                        if(state==11){
+                        fillCombo(10);
+                    }else if(state ==2){
+                        fillCombo(21);
+                    }
+                    }else{
+                        if(state==11){
+                        fillCombo(10);
+                    }else if(state ==2){
+                        fillCombo(20);
+                    }
+                    }             
+                    break;
                 case "xls":
                 case "flv":
                 case "mkv":
