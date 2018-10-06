@@ -352,14 +352,24 @@ public class mainApplicaton extends javax.swing.JFrame {
     }
     
     private void reset(){
-       plainFile = null;
-       plainFilePath = null;
-       lblFileName.setText("");
-       //lblTimeTaken.setText("");
-       publicKeyRSA = null;
-       privateKeyRSA = null;
-       size = 0;
-    }
+        plainFile = null;
+        plainFilePath = null;
+        lblFileName.setText("");
+        radioNonSensitive.setEnabled(false);
+        radioSensitive.setEnabled(false);
+        radioHashing.setEnabled(false);
+        EncryptionRadio.setEnabled(false);
+        DecryptionRadio.setEnabled(false);
+        radioNonSensitive.setSelected(false);
+        radioSensitive.setSelected(false);
+        radioHashing.setSelected(false);
+        EncryptionRadio.setSelected(false);
+        DecryptionRadio.setSelected(false);
+        publicKeyRSA = null;
+        privateKeyRSA = null;
+        size = 0;
+        EncryptionMethodCombo.removeAllItems();
+     }
     private void fillCombo(int size){
         EncryptionMethodCombo.removeAllItems();
         switch(size){
@@ -373,38 +383,19 @@ public class mainApplicaton extends javax.swing.JFrame {
                     EncryptionMethodCombo.addItem("AES");
                     EncryptionMethodCombo.addItem("BlowFish");
                     break;
-                case 2:
-                    EncryptionMethodCombo.addItem("MD5");
+                case 21:
                     EncryptionMethodCombo.addItem("DES");
                     EncryptionMethodCombo.addItem("BlowFish");
                     break;
-                case 3:
-                    EncryptionMethodCombo.addItem("SHA1");
-                    EncryptionMethodCombo.addItem("AES");
-                    EncryptionMethodCombo.addItem("BlowFish");
-                    break;
-                case 4:
-                    EncryptionMethodCombo.addItem("SHA1");
-                    EncryptionMethodCombo.addItem("DES");
-                    EncryptionMethodCombo.addItem("BlowFish");
-                    break;
-                case 5:
-                    EncryptionMethodCombo.addItem("MD5");
+                case 22:
                     EncryptionMethodCombo.addItem("AES");
                     EncryptionMethodCombo.addItem("DES");
                     break;
                 case 6:
-                    EncryptionMethodCombo.addItem("MD5");
                     EncryptionMethodCombo.addItem("BlowFish");
                     break;
                 case 7:
-                    EncryptionMethodCombo.addItem("MD5");
                     EncryptionMethodCombo.addItem("AES");
-                    break;
-                case 8:
-                    EncryptionMethodCombo.addItem("SHA1");
-                    EncryptionMethodCombo.addItem("AES");
-                    EncryptionMethodCombo.addItem("DES");
                     break;
                 default:
         }
@@ -470,16 +461,32 @@ public class mainApplicaton extends javax.swing.JFrame {
                     }             
                     break;
                 case "zip":
-                    fillCombo(1);
+                    if(state==1){
+                        fillCombo(10);
+                    }else if(state ==2){
+                        fillCombo(20);
+                    }             
                     break;
                 case "gif":
-                    fillCombo(2);
+                    if(state==1){
+                        fillCombo(10);
+                    }else if(state ==2){
+                        fillCombo(21);
+                    }             
                     break;
                 case "3gp":
-                    fillCombo(1);
+                    if(state==1){
+                        fillCombo(10);
+                    }else if(state ==2){
+                        fillCombo(20);
+                    }             
                     break;
                 case "png":
-                    fillCombo(3);
+                    if(state==1){
+                        fillCombo(10);
+                    }else if(state ==2){
+                        fillCombo(20);
+                    }             
                     break;
                 case "mp4":
                 case "xls":
