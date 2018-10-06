@@ -9,12 +9,9 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.security.Key;
-import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -49,8 +45,13 @@ public class mainApplicaton extends javax.swing.JFrame {
     public mainApplicaton() {
         initComponents();
         this.setLocationRelativeTo(null);
-        buttonGroup();
-        EncryptionRadio.setSelected(true);
+        buttonGroupEncryption();
+        buttonGroupOperation();
+        radioNonSensitive.setEnabled(false);
+        radioSensitive.setEnabled(false);
+        radioHashing.setEnabled(false);
+        EncryptionRadio.setEnabled(false);
+        DecryptionRadio.setEnabled(false);
     }
 
     /**
@@ -67,20 +68,23 @@ public class mainApplicaton extends javax.swing.JFrame {
         headPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblClose = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        EncryptionRadio = new javax.swing.JRadioButton();
-        DecryptionRadio = new javax.swing.JRadioButton();
         operationPanel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        btnBrowse = new javax.swing.JButton();
-        lblFileName = new javax.swing.JLabel();
         EncryptionMethodCombo = new javax.swing.JComboBox<>();
         submitButton = new javax.swing.JButton();
         lblTimeTaken = new javax.swing.JLabel();
         lblStoredFileLocation = new javax.swing.JLabel();
         lblMethod = new javax.swing.JLabel();
         lblMethod1 = new javax.swing.JLabel();
-        EncryptionTypeCombo = new javax.swing.JComboBox<>();
+        EncryptionRadio = new javax.swing.JRadioButton();
+        DecryptionRadio = new javax.swing.JRadioButton();
+        radioHashing = new javax.swing.JRadioButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        btnBrowse = new javax.swing.JButton();
+        lblFileName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        radioNonSensitive = new javax.swing.JRadioButton();
+        radioSensitive = new javax.swing.JRadioButton();
 
         jLabel3.setText("jLabel3");
 
@@ -108,9 +112,9 @@ public class mainApplicaton extends javax.swing.JFrame {
         headPanelLayout.setHorizontalGroup(
             headPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headPanelLayout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addGap(124, 124, 124)
                 .addComponent(jLabel1)
-                .addGap(106, 106, 106)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblClose)
                 .addContainerGap())
         );
@@ -119,39 +123,15 @@ public class mainApplicaton extends javax.swing.JFrame {
             .addGroup(headPanelLayout.createSequentialGroup()
                 .addGroup(headPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(headPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblClose))
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(headPanelLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(lblClose)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        jLabel2.setText("Operation :");
-
-        EncryptionRadio.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        EncryptionRadio.setText("Encryption");
-
-        DecryptionRadio.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        DecryptionRadio.setText("Decryption");
-
         operationPanel.setBackground(new java.awt.Color(254, 195, 136));
-
-        jLabel4.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        jLabel4.setForeground(java.awt.Color.darkGray);
-        jLabel4.setText("Select File :");
-
-        btnBrowse.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        btnBrowse.setText("Browse File...");
-        btnBrowse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBrowseActionPerformed(evt);
-            }
-        });
-
-        lblFileName.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
-        lblFileName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         EncryptionMethodCombo.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
         EncryptionMethodCombo.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -180,65 +160,57 @@ public class mainApplicaton extends javax.swing.JFrame {
 
         lblMethod1.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
         lblMethod1.setForeground(java.awt.Color.darkGray);
-        lblMethod1.setText("Encryption Type :");
+        lblMethod1.setText("Type :");
 
-        EncryptionTypeCombo.setFont(new java.awt.Font("Bitstream Vera Serif", 1, 15)); // NOI18N
-        EncryptionTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NORMAL", "SENSITIVE" }));
-        EncryptionTypeCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EncryptionTypeComboActionPerformed(evt);
-            }
-        });
+        EncryptionRadio.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        EncryptionRadio.setText("Encryption");
+
+        DecryptionRadio.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        DecryptionRadio.setText("Decryption");
+
+        radioHashing.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        radioHashing.setText("Hashing");
 
         javax.swing.GroupLayout operationPanelLayout = new javax.swing.GroupLayout(operationPanel);
         operationPanel.setLayout(operationPanelLayout);
         operationPanelLayout.setHorizontalGroup(
             operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, operationPanelLayout.createSequentialGroup()
-                .addContainerGap(210, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(277, 277, 277))
+            .addGroup(operationPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMethod1)
+                .addGap(49, 49, 49)
+                .addComponent(radioHashing)
+                .addGap(88, 88, 88)
+                .addComponent(EncryptionRadio)
+                .addGap(48, 48, 48)
+                .addComponent(DecryptionRadio)
+                .addGap(52, 52, 52))
             .addGroup(operationPanelLayout.createSequentialGroup()
                 .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(operationPanelLayout.createSequentialGroup()
                         .addGap(338, 338, 338)
                         .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblTimeTaken, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblStoredFileLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(operationPanelLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(lblFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(operationPanelLayout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblMethod)
-                            .addComponent(lblMethod1))
+                        .addGap(221, 221, 221)
+                        .addComponent(lblMethod)
                         .addGap(18, 18, 18)
-                        .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(EncryptionMethodCombo, 0, 127, Short.MAX_VALUE)
-                            .addComponent(EncryptionTypeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EncryptionMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        operationPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {EncryptionMethodCombo, btnBrowse});
-
         operationPanelLayout.setVerticalGroup(
             operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(operationPanelLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBrowse)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(lblFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMethod1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EncryptionTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(EncryptionRadio)
+                    .addComponent(DecryptionRadio)
+                    .addComponent(radioHashing)
+                    .addComponent(lblMethod1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(70, 70, 70)
                 .addGroup(operationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EncryptionMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -251,38 +223,107 @@ public class mainApplicaton extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        operationPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {EncryptionMethodCombo, EncryptionTypeCombo, btnBrowse, jLabel4, lblFileName, lblMethod, lblMethod1, lblStoredFileLocation, lblTimeTaken});
+        operationPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {EncryptionMethodCombo, lblMethod, lblMethod1, lblStoredFileLocation, lblTimeTaken});
+
+        jPanel1.setBackground(new java.awt.Color(251, 168, 144));
+
+        jLabel4.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        jLabel4.setForeground(java.awt.Color.darkGray);
+        jLabel4.setText("Select File :");
+
+        btnBrowse.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        btnBrowse.setText("Browse File...");
+        btnBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrowseActionPerformed(evt);
+            }
+        });
+
+        lblFileName.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        lblFileName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(jLabel4)
+                .addGap(42, 42, 42)
+                .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBrowse))
+                    .addComponent(lblFileName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnBrowse, jLabel4, lblFileName});
+
+        jLabel2.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        jLabel2.setText("Operation :");
+
+        radioNonSensitive.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        radioNonSensitive.setText("NON SENSITIVE");
+        radioNonSensitive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioNonSensitiveActionPerformed(evt);
+            }
+        });
+
+        radioSensitive.setFont(new java.awt.Font("Bitstream Vera Serif", 0, 18)); // NOI18N
+        radioSensitive.setText("SENSITIVE");
+        radioSensitive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioSensitiveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
         basePanel.setLayout(basePanelLayout);
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(basePanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(operationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(headPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(headPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(operationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(3, 3, 3))
             .addGroup(basePanelLayout.createSequentialGroup()
-                .addGap(92, 92, 92)
+                .addGap(78, 78, 78)
                 .addComponent(jLabel2)
-                .addGap(129, 129, 129)
-                .addComponent(EncryptionRadio)
-                .addGap(94, 94, 94)
-                .addComponent(DecryptionRadio)
+                .addGap(43, 43, 43)
+                .addComponent(radioNonSensitive)
+                .addGap(67, 67, 67)
+                .addComponent(radioSensitive)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(basePanelLayout.createSequentialGroup()
                 .addComponent(headPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(EncryptionRadio)
-                    .addComponent(DecryptionRadio))
+                    .addComponent(radioNonSensitive)
+                    .addComponent(radioSensitive, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(operationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(operationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        basePanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, radioNonSensitive, radioSensitive});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,10 +340,15 @@ public class mainApplicaton extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void buttonGroup(){
+    private void buttonGroupEncryption(){
         ButtonGroup bg = new ButtonGroup();
         bg.add(EncryptionRadio);
         bg.add(DecryptionRadio);
+    }
+    private void buttonGroupOperation(){
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(radioSensitive);
+        bg.add(radioNonSensitive);
     }
     
     private void reset(){
@@ -312,16 +358,18 @@ public class mainApplicaton extends javax.swing.JFrame {
        //lblTimeTaken.setText("");
        publicKeyRSA = null;
        privateKeyRSA = null;
-       EncryptionRadio.setSelected(true);
        size = 0;
     }
     private void fillCombo(int size){
         EncryptionMethodCombo.removeAllItems();
         switch(size){
-                case 1:
+                case 10:
                     EncryptionMethodCombo.addItem("MD5");
                     break;
                 case 11:
+                    EncryptionMethodCombo.addItem("SHA1");
+                    break;
+                case 20:
                     EncryptionMethodCombo.addItem("AES");
                     EncryptionMethodCombo.addItem("BlowFish");
                     break;
@@ -416,9 +464,9 @@ public class mainApplicaton extends javax.swing.JFrame {
                 case "jpeg" :
                 case "jpg":
                     if(state==1){
-                        fillCombo(1);
+                        fillCombo(10);
                     }else if(state ==2){
-                        fillCombo(11);
+                        fillCombo(20);
                     }             
                     break;
                 case "zip":
@@ -443,6 +491,26 @@ public class mainApplicaton extends javax.swing.JFrame {
         }
                 
     }
+    
+    
+    private void radioSelect(){
+        int state = -1;
+        if(radioNonSensitive.isSelected()){
+           state = 1;
+           radioHashing.setEnabled(true);
+           EncryptionRadio.setSelected(false);
+           DecryptionRadio.setSelected(false);
+           EncryptionRadio.setEnabled(false);
+           DecryptionRadio.setEnabled(false);
+        }else if(radioSensitive.isSelected()){
+           state = 2;
+           radioHashing.setEnabled(false);
+           radioHashing.setSelected(false);
+           EncryptionRadio.setEnabled(true);
+           DecryptionRadio.setEnabled(true);
+       }
+        encryptionSelection(extension, size,state);
+    }
     private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
         lblTimeTaken.setText("");
         lblStoredFileLocation.setText("");
@@ -456,13 +524,16 @@ public class mainApplicaton extends javax.swing.JFrame {
             System.out.println(extension);
             size = (int) plainFile.length() / 1024;
             lblFileName.setText(plainFileChooser.getSelectedFile().getName()+"  "+size+ "  KB");
-            //encryptionSelection(extension, size);
+            radioNonSensitive.setEnabled(true);
+            radioSensitive.setEnabled(true);
         }
         if (rVal == JFileChooser.CANCEL_OPTION) {
             filename.setText("You pressed cancel");
             dir.setText("");
             extension = null;
             size=0;
+            radioNonSensitive.setEnabled(false);
+            radioSensitive.setEnabled(false);
         }
     }//GEN-LAST:event_btnBrowseActionPerformed
 
@@ -506,15 +577,13 @@ public class mainApplicaton extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void EncryptionTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncryptionTypeComboActionPerformed
-       int state = -1;
-       if(EncryptionTypeCombo.getSelectedItem().equals("NORMAL")){
-           state = 1;
-       }else if(EncryptionTypeCombo.getSelectedItem().equals("SENSITIVE")){
-           state = 2;
-       }
-        encryptionSelection(extension, size,state);
-    }//GEN-LAST:event_EncryptionTypeComboActionPerformed
+    private void radioNonSensitiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNonSensitiveActionPerformed
+       radioSelect();
+    }//GEN-LAST:event_radioNonSensitiveActionPerformed
+
+    private void radioSensitiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSensitiveActionPerformed
+       radioSelect();
+    }//GEN-LAST:event_radioSensitiveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -555,7 +624,6 @@ public class mainApplicaton extends javax.swing.JFrame {
     private javax.swing.JRadioButton DecryptionRadio;
     private javax.swing.JComboBox<String> EncryptionMethodCombo;
     private javax.swing.JRadioButton EncryptionRadio;
-    private javax.swing.JComboBox<String> EncryptionTypeCombo;
     private javax.swing.JPanel basePanel;
     private javax.swing.JButton btnBrowse;
     private javax.swing.JPanel headPanel;
@@ -563,6 +631,7 @@ public class mainApplicaton extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblFileName;
     private javax.swing.JLabel lblMethod;
@@ -570,6 +639,9 @@ public class mainApplicaton extends javax.swing.JFrame {
     private javax.swing.JLabel lblStoredFileLocation;
     private javax.swing.JLabel lblTimeTaken;
     private javax.swing.JPanel operationPanel;
+    private javax.swing.JRadioButton radioHashing;
+    private javax.swing.JRadioButton radioNonSensitive;
+    private javax.swing.JRadioButton radioSensitive;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }
