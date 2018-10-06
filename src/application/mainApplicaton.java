@@ -503,7 +503,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                         }
                     }             
                     break;
-                case "xls":
+                case "xlsx":
                     if(size<28){
                         if(state==1){
                             fillCombo(10);
@@ -519,9 +519,65 @@ public class mainApplicaton extends javax.swing.JFrame {
                     }             
                     break;
                 case "flv":
+                    if(size<30720){
+                        if(state==1){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(20);
+                        }
+                    }else{
+                        if(state==11){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(22);
+                        }
+                    }             
+                    break;
                 case "mkv":
+                    if(size<10240){
+                        if(state==1){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(22);
+                        }
+                    }else{
+                        if(state==11){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(20);
+                        }
+                    }             
+                    break;
                 case "svg":
+                    if(size<5120){
+                        if(state==1){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(30);
+                        }
+                    }else{
+                        if(state==11){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(31);
+                        }
+                    }             
+                    break;
                 case "pdf":
+                    if(size<1024){
+                        if(state==1){
+                            fillCombo(11);
+                        }else if(state ==2){
+                            fillCombo(22);
+                        }
+                    }else{
+                        if(state==11){
+                            fillCombo(11);
+                        }else if(state ==2){
+                            fillCombo(20);
+                        }
+                    }             
+                    break;
                 default:
         }
                 
