@@ -511,7 +511,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             fillCombo(22);
                         }
                     }else{
-                        if(state==11){
+                        if(state==1){
                             fillCombo(10);
                         }else if(state ==2){
                             fillCombo(20);
@@ -526,7 +526,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             fillCombo(20);
                         }
                     }else{
-                        if(state==11){
+                        if(state==1){
                             fillCombo(10);
                         }else if(state ==2){
                             fillCombo(22);
@@ -541,7 +541,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             fillCombo(22);
                         }
                     }else{
-                        if(state==11){
+                        if(state==1){
                             fillCombo(10);
                         }else if(state ==2){
                             fillCombo(20);
@@ -556,7 +556,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             fillCombo(30);
                         }
                     }else{
-                        if(state==11){
+                        if(state==1){
                             fillCombo(10);
                         }else if(state ==2){
                             fillCombo(31);
@@ -571,7 +571,7 @@ public class mainApplicaton extends javax.swing.JFrame {
                             fillCombo(22);
                         }
                     }else{
-                        if(state==11){
+                        if(state==1){
                             fillCombo(11);
                         }else if(state ==2){
                             fillCombo(20);
