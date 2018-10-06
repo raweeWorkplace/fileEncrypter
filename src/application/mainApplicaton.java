@@ -490,20 +490,34 @@ public class mainApplicaton extends javax.swing.JFrame {
                     break;
                 case "mp4":
                     if(size<5120){
-                        if(state==11){
-                        fillCombo(10);
-                    }else if(state ==2){
-                        fillCombo(21);
-                    }
+                        if(state==1){
+                            fillCombo(11);
+                        }else if(state ==2){
+                            fillCombo(21);
+                        }
                     }else{
-                        if(state==11){
-                        fillCombo(10);
-                    }else if(state ==2){
-                        fillCombo(20);
-                    }
+                        if(state==1){
+                            fillCombo(11);
+                        }else if(state ==2){
+                            fillCombo(20);
+                        }
                     }             
                     break;
                 case "xls":
+                    if(size<28){
+                        if(state==1){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(22);
+                        }
+                    }else{
+                        if(state==11){
+                            fillCombo(10);
+                        }else if(state ==2){
+                            fillCombo(20);
+                        }
+                    }             
+                    break;
                 case "flv":
                 case "mkv":
                 case "svg":
